@@ -27,6 +27,7 @@ public class LogsAggregatorApplication {
   private static final Pattern COMMON_LOG_FORMAT_PATTERN = Pattern.compile(COMMON_LOG_FORMAT_REGEX);
   private static final int SECTION_GROUP_ID = 1;
   private static final String SECTION_COUNT_STRING_FORMAT = "%d - %s";
+  private static final Duration BATCH_INTERVAL = Durations.seconds(5);
   private static final Duration WINDOW_DURATION = Durations.seconds(60);
   private static final Duration SLIDE_DURATION = Durations.seconds(30);
   private static final int NUM_ENTRIES_TO_PRINT = 10;
@@ -35,7 +36,7 @@ public class LogsAggregatorApplication {
   public static void main(String[] args) throws InterruptedException {
     // Setup streaming context
     SparkConf conf = new SparkConf().setMaster("local[2]").setAppName(LogsAggregatorApplication.class.getSimpleName());
-    JavaStreamingContext streamingContext = new JavaStreamingContext(conf, Durations.seconds(5));
+    JavaStreamingContext streamingContext = new JavaStreamingContext(conf, BATCH_INTERVAL);
 
     // Create a Kafka stream
     Map<String, Object> kafkaParams = getKafkaParams();

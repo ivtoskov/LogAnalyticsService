@@ -5,6 +5,16 @@ log lines in the [Common Logfile Format](https://www.w3.org/Daemon/User/Config/L
 running Kafka. The `SparkLogsAggregator` is a Spark Streaming application that consumes from the same topic and prints
 every 30 seconds the 10 most visited sections in the last minute.
 
+## Design decisions
+
+* Build - Maven, since it is mature and de-facto standard for Java projects.
+* HTTP REST service - Spring Boot, since it is very mature and quite easy to setup. I opted for a thin and stateless
+    service that will be easy to maintain and could scale horizontally.
+* Event streaming - Kafka, since it offers a high-throughput, low-latency, fault-tolerant solution for handling
+    real-time data feeds.
+* Stream processing - Spark Streaming, since it enables scalable, high-throughput, fault-tolerant stream processing of
+    live data streams. DStreams were chosen over Structured Streaming mostly due to familiarity.
+
 ## Build
 
 `mvn package`
